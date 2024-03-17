@@ -7,7 +7,7 @@ import convertBlobUrlToFile from "../helper/convertInFIle";
 const videoConstraints = {
   width: 400,
   height: 400,
-  facingMode: "user",
+  facingMode: { exact: "environment" },
 };
 
 const TakeImage = (props) => {

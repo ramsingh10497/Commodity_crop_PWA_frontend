@@ -8,10 +8,10 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import CreateReport from "../Components/CreateReport";
-import config from "../config";
 import moment from "moment";
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 function CustomizedTables({ rows }) {
   return (
@@ -36,7 +36,7 @@ function CustomizedTables({ rows }) {
             <Typography>
               <br />
               <a
-                href={`${config.HOST}:${config.PORT}/${row.pdf_path}`}
+                href={`${BACKEND_URL}/${row.pdf_path}`}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -62,7 +62,7 @@ function CustomizedTables({ rows }) {
 export default function Reports() {
   const [reports, setReports] = useState([]);
   const [loader, setLoader] = useState(false);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const onClose = () => {
     setOpen(false);
@@ -71,9 +71,10 @@ export default function Reports() {
   const getReports = () => {
     setLoader(true);
     axios
-      .get(`${config.HOST}:${config.PORT}/api/reports`, {
+      .get(`${BACKEND_URL}/api/reports`, {
         headers: {
           authorization: localStorage.getItem("token"),
+          "ngrok-skip-browser-warning": "69420",
         },
       })
       .then(({ data }) => {
